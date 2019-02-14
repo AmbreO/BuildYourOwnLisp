@@ -1,18 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-static char input[2048];
+#include <editline/readline.h>
 
-  int main(int argc, char** argv){
+int main(int argc, char** argv){
 
-  puts("Lisp version 0.0.0.1");
+  puts("Lisp version 0.0.0.2");
   puts("Press Ctrl+C to exit\n");
 
   while (1){
-    fputs("Lisp> ", stdout);
+    char* input = readline("Lisp> ");
 
-    fgets(input, 2048, stdin);
+    add_history(input);
 
-    printf("I don't understand the meaning of:%s", input);
+    printf("I don't understand the meaning of:%s\n", input);
+
+    free(input);
   }
 
 return 0;
