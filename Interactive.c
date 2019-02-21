@@ -4,7 +4,7 @@
 #ifdef _WIN32
 #include <string.h>
 
-static char buffer[2048]
+static char buffer[2048];
 
 char* readline(char* prompt){
   fputs(prompt, stdout);
