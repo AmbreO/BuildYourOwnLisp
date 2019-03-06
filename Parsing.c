@@ -23,13 +23,30 @@ void add_history(char* unused){}
 #include <editline/readline.h>
 #endif
 
+/*Function that raises x to the power of y*/
+long raise(long base, long power){
+  /* If the power is less than one,
+  we'll return zero since we can't represent decimals with a long
+  */
+  if (power < 0) { return 0; }
+  /* Return 1 for x^0 or 1^y since these are default cases */
+  else if ((power == 0) | (base == 1)) { return 1; }
+  else{
+    long result = 1;
+    for (; power > 0; --power)
+      result *= base;
+    return result;
+  }
+}
 
 /* Use operator string to see which operation to perform. */
 long eval_op(long x, char* op, long y){
-  if (strcmp(op, "+") == 0) { return x + y; }
-  if (strcmp(op, "-") == 0) { return x - y; }
-  if (strcmp(op, "*") == 0) { return x * y; }
-  if (strcmp(op, "/") == 0) { return x / y; }
+  if (strcmp(op, "+") == 0) { return x + y; }           //Addition
+  if (strcmp(op, "-") == 0) { return x - y; }           //Subtraction
+  if (strcmp(op, "*") == 0) { return x * y; }           //Multiplication
+  if (strcmp(op, "/") == 0) { return x / y; }           //Division
+  if (strcmp(op, "%") == 0) { return x - (x / y) * y; } //Remainder of Division
+  if (strcmp(op, "^") == 0) { return raise(x, y); }     //Raises x to the power of y
   return 0;
 }
 
@@ -66,13 +83,13 @@ int main(int argc, char** argv){
   mpca_lang(MPCA_LANG_DEFAULT,
   "                                                     \
     number   : /-?[0-9]+/ ;                             \
-    operator : '+' | '-' | '*' | '/' ;                  \
+    operator : '+' | '-' | '*' | '/' | '%' | '^' ;      \
     expr     : <number> | '(' <operator> <expr>+ ')' ;  \
     lispy    : /^/ <operator> <expr>+ /$/ ;             \
   ",
   Number, Operator, Expr, Lispy);
 
-  puts("Lisp version 0.0.0.5");
+  puts("Lisp version 0.0.0.6");
   puts("Press Ctrl+C to exit\n");
 
   while (1){
