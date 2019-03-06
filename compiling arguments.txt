@@ -1,0 +1,11 @@
+WhoSummonedMe.c
+Windows:  gcc -std=c99 -Wall WhoSummonedMe.c -o WhoSummonedMe
+MacOS:    cc -std=c99 -Wall WhoSummonedMe.c -o WhoSummonedMe
+
+Interactive.c
+Windows:  gcc -std=c99 -Wall Interactive.c -o Interactive
+MacOS:    cc -std=c99 -Wall Interactive.c -ledit -o Interactive
+
+Parsing.c
+Windows:  gcc -std=c99 -Wall Parsing.c mpc.c -o Parsing
+MacOS:    cc -std=c99 Parsing.c mpc.c -ledit -lm -o Parsing
