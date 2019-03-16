@@ -82,7 +82,7 @@ void lval_print(lval v){
       printf("Error:Division by zero!");
     }
     if (v.err == LERR_BAD_OP){
-      printf("Error:invalid operator");
+      printf("Error:Invalid operator");
     }
     if (v.err == LERR_BAD_NUM){
       printf("Error:Invalid number");
@@ -109,7 +109,11 @@ lval eval_op(lval x, char* op, lval y){
       ? lval_err(LERR_DIV_ZERO)
       : lval_num(x.num / y.num);
   }
-  //if (strcmp(op, "%") == 0) { return x - (x / y) * y; } //Remainder of Division
+  if (strcmp(op, "%") == 0) {                                   //Remainder of Division
+    return y.num == 0
+    ? lval_err(LERR_DIV_ZERO)
+    : lval_num(x.num - (x.num / y.num) * y.num);
+  }
   //if (strcmp(op, "^") == 0) { return raise(x, y); }     //Raises x to the power of y
   return lval_err(LERR_BAD_OP);
 }
@@ -156,7 +160,7 @@ int main(int argc, char** argv){
   ",
   Number, Operator, Expr, Lispy);
 
-  puts("Lisp version 0.0.1.0");
+  puts("Lisp version 0.0.1.1");
   puts("Press Ctrl+C to exit\n");
 
   while (1){
